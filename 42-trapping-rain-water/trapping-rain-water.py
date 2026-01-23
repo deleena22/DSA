@@ -15,11 +15,11 @@ class Solution(object):
                 # left wall is shorter
                 left = left + 1 # bottom
                 maxleft = max(maxleft, height[left]) # take the higher of bottom/maxleft?
-                water = water + max(0, maxleft - height[left])
+                water = water + maxleft - height[left]
             else:
                 right = right - 1 # bottom
                 maxright = max(maxright, height[right]) # take the higher of bottom/maxleft?
-                water = water + max(0, maxright - height[right])
+                water = water + maxright - height[right]
 
         return water
 
