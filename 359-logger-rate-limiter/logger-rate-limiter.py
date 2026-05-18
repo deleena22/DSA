@@ -1,8 +1,10 @@
+from collections import deque
 class Logger(object):
 
     def __init__(self):
         self.mapping = {}
-        self.seen = set()
+        self.q = deque([])
+        
 
         
 
@@ -13,15 +15,20 @@ class Logger(object):
         :rtype: bool
         """
 
-        if message in self.seen:
+        if self.mapping.get(message) is not None:
             last_seen = self.mapping[message]
             if timestamp - last_seen >= 10:
+                while self.q and self.q[0] != message:
+                    delmessage = self.q.popleft()
+                    del self.mapping[delmessage]
+                m = self.q.popleft()
+                self.q.append(m)
                 self.mapping[message] = timestamp
                 return True
             else:
                 return False
         else:
-            self.seen.add(message)
+            self.q.append(message)
             self.mapping[message] = timestamp
             return True
 
