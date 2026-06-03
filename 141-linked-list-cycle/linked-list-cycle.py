@@ -11,16 +11,13 @@ class Solution(object):
         :rtype: bool
         """
 
-        slow = head
-        fast = head
-
-        while fast and fast.next:
-            slow = slow.next # 1 jump
-            fast = fast.next.next # 2 jumps
+        fast, slow = head, head
+        while fast and fast.next and fast.next.next:
+            fast = fast.next.next
+            slow = slow.next
 
             if fast == slow:
                 return True
-        
         return False
 
         
